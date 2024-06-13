@@ -1,36 +1,15 @@
-import Pricing from '@/components/ui/Pricing/Pricing';
-import { createClient } from '@/utils/supabase/server';
-
 export default async function PricingPage() {
-  const supabase = createClient();
-
-  const {
-    data: { user }
-  } = await supabase.auth.getUser();
-
-  const { data: subscription, error } = await supabase
-    .from('subscriptions')
-    .select('*, prices(*, products(*))')
-    .in('status', ['trialing', 'active'])
-    .maybeSingle();
-
-  if (error) {
-    console.log(error);
-  }
-
-  const { data: products } = await supabase
-    .from('products')
-    .select('*, prices(*)')
-    .eq('active', true)
-    .eq('prices.active', true)
-    .order('metadata->index')
-    .order('unit_amount', { referencedTable: 'prices' });
-
   return (
-    <Pricing
-      user={user}
-      products={products ?? []}
-      subscription={subscription}
-    />
+    <div className="flex items-center justify-center">
+      <section className="bg-black">
+        <div className="max-w-6xl px-4 py-8 mx-auto sm:py-24 sm:px-6 lg:px-8">
+          <div className="sm:flex sm:flex-col sm:align-center"></div>
+          <p className="text-4xl font-extrabold text-white sm:text-center sm:text-6xl">
+            Scaling <span className="text-orange-500">Jupyter</span>{' '}
+            applications up to the millions.
+          </p>
+        </div>
+      </section>
+    </div>
   );
 }

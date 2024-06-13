@@ -22,9 +22,18 @@ export default function Navlinks({ user }: NavlinksProps) {
           <Logo />
         </Link>
         <nav className="ml-6 space-x-2 lg:block">
-          <Link href="/" className={s.link}>
+          <Link href="/pricing" className={s.link}>
             Pricing
           </Link>
+          {user && (
+            <Link
+              href="/jupyterlite/lab/index.html"
+              target="_blank"
+              className={s.link}
+            >
+              <span>JupyterLite</span>
+            </Link>
+          )}
           {user && (
             <Link href="/account" className={s.link}>
               Account
