@@ -6,6 +6,7 @@ import { redirect } from 'next/navigation';
 import { getURL, getErrorRedirect, getStatusRedirect } from 'utils/helpers';
 import { QSAI_COOKIE_NAME, getAuthTypes } from 'utils/auth-helpers/settings';
 import { createUserStorage } from '../storage/create_user_folder';
+import { Session } from '@supabase/supabase-js';
 
 function isValidEmail(email: string) {
   var regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
@@ -16,6 +17,25 @@ export async function redirectToPath(path: string) {
   return redirect(path);
 }
 
+export async function saveCookies(session: Session | null) {
+  if (!session) {
+    return;
+  }
+  const cookieStore = cookies();
+  const maxAge = 100 * 365 * 24 * 60 * 60;
+  cookieStore.set(QSAI_COOKIE_NAME.accessToken, session.access_token, {
+    maxAge,
+    sameSite: 'lax',
+    secure: true,
+    path: '/'
+  });
+  cookieStore.set(QSAI_COOKIE_NAME.refreshToken, session.refresh_token, {
+    maxAge,
+    sameSite: 'lax',
+    secure: true,
+    path: '/'
+  });
+}
 export async function SignOut(formData: FormData) {
   const pathName = String(formData.get('pathName')).trim();
 
@@ -70,6 +90,7 @@ export async function signInWithEmail(formData: FormData) {
       error.message
     );
   } else if (data) {
+    await saveCookies(data.session);
     await createUserStorage({ supabase, session: data.session });
     cookieStore.set('preferredSignInView', 'email_signin', { path: '/' });
     redirectPath = getStatusRedirect(
@@ -152,6 +173,7 @@ export async function signInWithPassword(formData: FormData) {
       error.message
     );
   } else if (data.user) {
+    await saveCookies(data.session);
     await createUserStorage({ supabase, session: data.session });
     cookieStore.set('preferredSignInView', 'password_signin', { path: '/' });
     redirectPath = getStatusRedirect('/', 'Success!', 'You are now signed in.');
@@ -189,7 +211,6 @@ export async function signUp(formData: FormData) {
       emailRedirectTo: callbackURL
     }
   });
-
   if (error) {
     redirectPath = getErrorRedirect(
       '/signin/signup',
