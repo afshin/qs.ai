@@ -42,6 +42,9 @@
   - SUPABASE_DB_PASSWORD: `qsai-dev-eu_central` database password
   - SUPABASE_PROJECT_ID: Project ID of `qsai-dev-eu_central`
 
+- and following variables:
+  - NEXT_PUBLIC_JUPYTERLITE_URL: URL to the JupyterLite deployment on Vercel
+
 ## TODO
   - Create `qa` and `prod` enviroments and enable deployment protection rules.
   - Update CI actions to deploy to `qa` and `prod`

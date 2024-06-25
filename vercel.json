@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/jupyterlite/:path*",
-      "destination": "https://qsai-jupyterlite.vercel.app/:path*"
+      "destination": "{@{NEXT_PUBLIC_JUPYTERLITE_URL}@}/:path*"
     }
   ]
 }
