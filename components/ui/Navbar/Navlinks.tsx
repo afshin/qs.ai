@@ -27,7 +27,10 @@ export default function Navlinks({ user }: NavlinksProps) {
           </Link>
           {user && (
             <Link
-              href="/jupyterlite/lab/index.html"
+              href={
+                process.env.NEXT_PUBLIC_JUPYTERLITE_URL ??
+                '/jupyterlite/lab/index.html'
+              }
               target="_blank"
               className={s.link}
             >
