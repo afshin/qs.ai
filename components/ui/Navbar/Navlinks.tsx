@@ -7,16 +7,18 @@ import Logo from '@/components/icons/Logo';
 import { usePathname, useRouter } from 'next/navigation';
 import { getRedirectMethod } from '@/utils/auth-helpers/settings';
 import s from './Navbar.module.css';
+import { ThemeSwitcher } from '@/components/ui/ThemeSwitcher';
 
 interface NavlinksProps {
   user?: any;
 }
 
 export default function Navlinks({ user }: NavlinksProps) {
-  const router = getRedirectMethod() === 'client' ? useRouter() : null;
-
+  const clientRouter = useRouter();
+  const router = getRedirectMethod() === 'client' ? clientRouter : null;
+  const pathName = usePathname();
   return (
-    <div className="relative flex flex-row justify-between py-4 align-center md:py-6">
+    <div className="relative flex flex-row justify-between py-4 align-center md:py-4  dark:text-white">
       <div className="flex items-center flex-1">
         <Link href="/" className={s.logo} aria-label="Logo">
           <Logo />
@@ -26,15 +28,8 @@ export default function Navlinks({ user }: NavlinksProps) {
             Pricing
           </Link>
           {user && (
-            <Link
-              href={
-                process.env.NEXT_PUBLIC_JUPYTERLITE_URL ??
-                '/jupyterlite/lab/index.html'
-              }
-              target="_blank"
-              className={s.link}
-            >
-              <span>JupyterLite</span>
+            <Link href="/launcher/home" className={s.link}>
+              <span>Launcher</span>
             </Link>
           )}
           {user && (
@@ -44,10 +39,11 @@ export default function Navlinks({ user }: NavlinksProps) {
           )}
         </nav>
       </div>
-      <div className="flex justify-end space-x-8">
+      <div className="flex justify-end items-center space-x-8">
+        <ThemeSwitcher />
         {user ? (
           <form onSubmit={(e) => handleRequest(e, SignOut, router)}>
-            <input type="hidden" name="pathName" value={usePathname()} />
+            <input type="hidden" name="pathName" value={pathName} />
             <button type="submit" className={s.link}>
               Sign out
             </button>

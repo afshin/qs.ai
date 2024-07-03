@@ -51,7 +51,7 @@ jobs:
           NEXT_PUBLIC_JUPYTERLITE_URL: ${{ vars.NEXT_PUBLIC_JUPYTERLITE_URL }}
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: '20'
       - uses: pnpm/action-setup@v4
         with:
           version: 9

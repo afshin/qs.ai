@@ -34,11 +34,11 @@ pnpm supabase:status
 
 ### Configure Auth
 
-Follow [this guide](https://supabase.com/docs/guides/auth/social-login/auth-github) to set up an OAuth app with GitHub and save the client id and secret key. 
+Follow [this guide](https://supabase.com/docs/guides/auth/social-login/auth-github) to set up an OAuth app with GitHub and save the client id and secret key.
 
 Rename `.env.example` to `.env` and update `SUPABASE_AUTH_EXTERNAL_GITHUB_CLIENT_ID` and `SUPABASE_AUTH_EXTERNAL_GITHUB_SECRET` with the saved data from the previous step.
 
-Restart Supabase with 
+Restart Supabase with
 
 ```bash
 pnpm supabase:restart
@@ -50,7 +50,7 @@ Go to [Supabase Studio](http://127.0.0.1:54323/project/default/storage/buckets) 
 
 ### Run the Next.js client
 
-Go to `qsai-jupyterlite` project and start serving the JupyterLite appllication with 
+Go to `qsai-jupyterlite` project and start serving the JupyterLite appllication with
 
 ```bash
 # In qsai-jupyterlite repo
@@ -63,4 +63,4 @@ In a separate terminal, run the following command in the current project to star
 pnpm dev
 ```
 
-Then you should be able to log in with username and password created from the [Supabase Studio](http://127.0.0.1:54323/project/default/auth/users) interface. 
+Then you should be able to log in with username and password created from the [Supabase Studio](http://127.0.0.1:54323/project/default/auth/users) interface.

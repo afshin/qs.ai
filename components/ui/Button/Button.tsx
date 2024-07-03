@@ -30,15 +30,11 @@ const Button = forwardRef<HTMLButtonElement, Props>((props, buttonRef) => {
     ...rest
   } = props;
   const ref = useRef(null);
-  const rootClassName = cn(
-    styles.root,
-    {
-      [styles.slim]: variant === 'slim',
-      [styles.loading]: loading,
-      [styles.disabled]: disabled
-    },
-    className
-  );
+  const rootClassName = cn(className, styles.root, {
+    [styles.slim]: variant === 'slim',
+    [styles.loading]: loading,
+    [styles.disabled]: disabled
+  });
   return (
     <Component
       aria-pressed={active}

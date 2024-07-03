@@ -176,7 +176,11 @@ export async function signInWithPassword(formData: FormData) {
     await saveCookies(data.session);
     await createUserStorage({ supabase, session: data.session });
     cookieStore.set('preferredSignInView', 'password_signin', { path: '/' });
-    redirectPath = getStatusRedirect('/', 'Success!', 'You are now signed in.');
+    redirectPath = getStatusRedirect(
+      '/launcher/home',
+      'Success!',
+      'You are now signed in.'
+    );
   } else {
     redirectPath = getErrorRedirect(
       '/signin/password_signin',

@@ -3,18 +3,18 @@ name: Deploy preview
 on:
   pull_request:
     branches:
-      - "*"
+      - '*'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     environment:
       name: dev
-    
+
     permissions:
       pull-requests: write
       contents: read
-    
+
     env:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
@@ -22,7 +22,7 @@ jobs:
       NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
       NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -35,13 +35,16 @@ jobs:
           NEXT_PUBLIC_JUPYTERLITE_URL: ${{ vars.NEXT_PUBLIC_JUPYTERLITE_URL }}
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: '20'
       - uses: pnpm/action-setup@v4
         with:
           version: 9
       - name: Install the dependencies
         run: |
           pnpm install
+      - name: Lint check
+        run: |
+          pnpm lint && pnpm prettier
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
       - name: Pull Vercel Environment Information

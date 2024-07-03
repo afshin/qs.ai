@@ -1,5 +1,6 @@
 'use client';
 
+import * as React from 'react';
 import Button from '@/components/ui/Button';
 import { signInWithOAuth } from '@/utils/auth-helpers/client';
 import { type Provider } from '@supabase/supabase-js';
