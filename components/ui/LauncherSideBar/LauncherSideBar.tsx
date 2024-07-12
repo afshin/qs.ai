@@ -17,9 +17,11 @@ export const LauncherSideBar = (props: Props) => {
         variant={'outline'}
       >
         <div className="w-full grid grid-cols-4">
-          <HomeIcon className="h-5 w-5  ml-2 m-2" />{' '}
+          <Link href="/launcher/home" className="col-span-1 text-left">
+            <HomeIcon className="h-5 w-5 ml-0 sm:ml-2 m-2" />{' '}
+          </Link>
           <Link href="/launcher/home" className="col-span-3 text-left">
-            <p className="m-2">Home</p>
+            <p className="m-2 invisible sm:visible">Home</p>
           </Link>
         </div>
       </Button>
@@ -28,9 +30,11 @@ export const LauncherSideBar = (props: Props) => {
         variant={'outline'}
       >
         <div className="w-full h-full grid grid-cols-4">
-          <FolderIcon className="h-5 w-5  ml-2 m-2" />{' '}
+          <Link href="/launcher/project" className="col-span-1 text-left">
+            <FolderIcon className="h-5 w-5   ml-0 sm:ml-2  m-2" />{' '}
+          </Link>
           <Link href="/launcher/project" className="col-span-3 text-left">
-            <p className="m-2">Project</p>
+            <p className="m-2 invisible sm:visible">Project</p>
           </Link>
         </div>
       </Button>
@@ -39,9 +43,11 @@ export const LauncherSideBar = (props: Props) => {
         variant={'outline'}
       >
         <div className="w-full h-full grid grid-cols-4">
-          <LucideDatabase className="h-5 w-5  ml-2 m-2" />{' '}
+          <Link href="/launcher/data-provider" className="col-span-1 text-left">
+            <LucideDatabase className="h-5 w-5   ml-0 sm:ml-2  m-2" />{' '}
+          </Link>
           <Link href="/launcher/data-provider" className="col-span-3 text-left">
-            <p className="m-2">Data provider</p>
+            <p className="m-2 invisible sm:visible">Data</p>
           </Link>
         </div>
       </Button>
