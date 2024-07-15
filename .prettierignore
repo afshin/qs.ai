@@ -11,3 +11,5 @@ compiled/
 pnpm-lock.yaml
 
 types_db.ts
+
+CHANGELOG.md
