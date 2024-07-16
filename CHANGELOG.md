@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/QuantStack/qs.ai/compare/v1.0.0...v1.1.0) (2024-07-16)
+
+
+### Features
+
+* add environment table to database. ([#24](https://github.com/QuantStack/qs.ai/issues/24)) ([6c48020](https://github.com/QuantStack/qs.ai/commit/6c4802021bab4b663cf23153c6759227f9c6d95e))
+
 # 1.0.0 (2024-07-12)
 
 ### Bug Fixes
