@@ -50,7 +50,7 @@ Go to [Supabase Studio](http://127.0.0.1:54323/project/default/storage/buckets) 
 
 ### Run the Next.js client
 
-Go to `qsai-jupyterlite` project and start serving the JupyterLite appllication with
+Go to `qsai-jupyterlite` project and start serving the JupyterLite application with
 
 ```bash
 # In qsai-jupyterlite repo
@@ -60,7 +60,8 @@ npm run serve
 In a separate terminal, run the following command in the current project to start the development server:
 
 ```bash
+pnpm supbase:reset # Only need this command if the database schema is updated
 pnpm dev
 ```
 
-Then you should be able to log in with username and password created from the [Supabase Studio](http://127.0.0.1:54323/project/default/auth/users) interface.
+Then you should be able to log in with the username `user@example.com` and password `password`, or you can create a new account from the [Supabase Studio](http://127.0.0.1:54323/project/default/auth/users) interface.
