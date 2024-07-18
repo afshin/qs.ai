@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/QuantStack/qs.ai/compare/v1.1.0...v1.2.0) (2024-07-18)
+
+
+### Features
+
+* Add /api/v1/env endpoint ([#25](https://github.com/QuantStack/qs.ai/issues/25)) ([a872eb4](https://github.com/QuantStack/qs.ai/commit/a872eb4e8db84791e3261c060533ef18398e5c61))
+
 # [1.1.0](https://github.com/QuantStack/qs.ai/compare/v1.0.0...v1.1.0) (2024-07-16)
 
 
