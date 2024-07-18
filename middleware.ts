@@ -1,8 +1,10 @@
 import { type NextRequest } from 'next/server';
-import { updateSession } from '@/utils/supabase/middleware';
+import { updateCors, updateSession } from '@/utils/supabase/middleware';
 
 export async function middleware(request: NextRequest) {
-  return await updateSession(request);
+  const responseWithSession = await updateSession(request);
+  const responseWithCors = updateCors(request, responseWithSession);
+  return responseWithCors;
 }
 
 export const config = {

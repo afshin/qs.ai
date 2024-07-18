@@ -1,0 +1,91 @@
+openapi: 3.0.1
+info:
+  title: QSAI
+  description: QSAI API
+  version: 1.0.0
+paths:
+  /api/v1/env/:
+    get:
+      tags:
+        - environment
+      summary: Read all authorized environments
+      responses:
+        200:
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllEnvs'
+        401:
+          description: Unauthorized
+  /api/v1/env/{id}:
+    get:
+      tags:
+        - environment
+      summary: Read authorized environment by id
+      parameters:
+        - required: true
+          name: id
+          description: ID of the environment
+          schema:
+            type: string
+          in: path
+
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                description: 'Authorized environment'
+                type: object
+                required:
+                  - status
+                  - data
+                properties:
+                  status:
+                    type: number
+                    description: HTTP Response code
+                  error:
+                    type: string
+                  data:
+                    $ref: '#/components/schemas/Environment'
+components:
+  schemas:
+    AllEnvs:
+      description: 'All authorized environments'
+      type: object
+      required:
+        - status
+        - data
+      properties:
+        status:
+          type: number
+          description: HTTP Response code
+        error:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Environment'
+    Environment:
+      description: 'Environment description'
+      type: object
+      required:
+        - uid
+        - content
+        - created_at
+        - updated_at
+      properties:
+        uid:
+          type: string
+          description: UID of environment
+        content:
+          type: object
+          description: Environment content
+        created_at:
+          type: string
+          description: Creation time stamp
+        updated_at:
+          type: string
+          description: Updated time stamp

@@ -95,7 +95,7 @@ VALUES
     'd9c444f1-4e91-4abb-b4c7-1d18318990e9',
     '2023-02-25T10:06:34.441Z',
     '2023-02-25T10:06:34.441Z',
-    '{"name":"Default Env"}'
+    '{"name":"Default project", "description": "Default JupyterLite deployment proposed by QS.AI. It contains the popular Python scientific libraries like Numpy, Scipy,... as well as vizualization tools.", "shortDesc":"Default JupyterLite deployment", "dependencies": ["numpy"], "lockfile":""}'
   );
 
 INSERT INTO
