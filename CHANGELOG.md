@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/QuantStack/qs.ai/compare/v1.2.0...v1.3.0) (2024-07-22)
+
+
+### Features
+
+* Create new environment ([#26](https://github.com/QuantStack/qs.ai/issues/26)) ([02cb13b](https://github.com/QuantStack/qs.ai/commit/02cb13b20f2e81d6d4c0b7af67d84b74b284e65b))
+
 # [1.2.0](https://github.com/QuantStack/qs.ai/compare/v1.1.0...v1.2.0) (2024-07-18)
 
 
