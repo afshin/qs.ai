@@ -1,8 +1,10 @@
 import s from './LoadingDots.module.css';
+import cn from 'classnames';
 
-const LoadingDots = () => {
+const LoadingDots = (props: { className?: string }) => {
+  const rootClassName = cn(s.root, props.className);
   return (
-    <span className={s.root}>
+    <span className={rootClassName}>
       <span />
       <span />
       <span />
