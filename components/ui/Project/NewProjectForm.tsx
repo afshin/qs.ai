@@ -76,6 +76,11 @@ export function NewProjectForm() {
     });
     setSubmitting(false);
     if (response.success) {
+      setName('');
+      setSummary('');
+      setDesc('');
+      setKernelCode(BASE_KERNEL_ENV);
+      setBuildCode(BASE_BUILD_ENV);
       setOpen(false);
       router.refresh();
     }
