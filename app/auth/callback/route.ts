@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
         );
       }
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
 
     const { data } = await supabase.auth.getSession();

@@ -26,29 +26,34 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/@shadcn/dropdown-menu';
 import { sendRequest } from '@/utils/helpers';
-import { EditIcon, ShareIcon, TrashIcon } from 'lucide-react';
+import {
+  EditIcon,
+  ShareIcon,
+  TrashIcon,
+  SquareGanttChartIcon
+} from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
-import { FolderIcon } from 'lucide-react';
+import { FileBoxIcon } from 'lucide-react';
 
 interface IProps {
   name?: string;
+  latest?: string;
   description?: string;
   uid: string;
-  envUID: string;
-  envDetail: { name: string; version: string };
+  public?: boolean;
   editHandler: () => void;
   detailHandler: () => void;
 }
 export function ProjectCard(props: IProps) {
-  const { description } = props;
+  const { latest, description } = props;
   const router = useRouter();
   const [confirm, setConfirm] = useState(false);
 
-  const deleteProj = useCallback(async () => {
+  const deleteEnv = useCallback(async () => {
     const response = await sendRequest<{ success: boolean; value: string }>({
-      url: `/api/v1/project/${props.uid}`,
+      url: `/api/v1/env/${props.uid}`,
       method: 'DELETE'
     });
     if (response.success) {
@@ -64,13 +69,13 @@ export function ProjectCard(props: IProps) {
             <DialogTitle>Are you absolutely sure?</DialogTitle>
             <DialogDescription>
               This action cannot be undone. This will permanently delete your
-              project and remove your data from our servers.
+              environment and remove your data from our servers.
             </DialogDescription>
             <DialogFooter>
               <Button variant={'secondary'} onClick={() => setConfirm(false)}>
                 Cancel
               </Button>
-              <Button variant={'destructive'} onClick={deleteProj}>
+              <Button variant={'destructive'} onClick={deleteEnv}>
                 Delete
               </Button>
             </DialogFooter>
@@ -82,7 +87,7 @@ export function ProjectCard(props: IProps) {
           <div className="flex flex-row justify-between">
             <CardTitle className="text-xl">
               <div className="flex gap-2">
-                <FolderIcon />
+                <FileBoxIcon />
                 <span className="leading-[100%]">{props.name}</span>
               </div>
             </CardTitle>
@@ -91,27 +96,35 @@ export function ProjectCard(props: IProps) {
                 <Ellipsis />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem>
-                  <ShareIcon size={'1rem'} className="mr-3" />
-                  Share
+                {!props.public && (
+                  <>
+                    <DropdownMenuItem>
+                      <ShareIcon size={'1rem'} className="mr-3" />
+                      Share
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={props.editHandler}>
+                      <EditIcon size={'1rem'} className="mr-3" />
+                      Edit
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                  </>
+                )}
+                <DropdownMenuItem onClick={props.detailHandler}>
+                  <SquareGanttChartIcon size={'1rem'} className="mr-3" />
+                  Detail
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={props.editHandler}>
-                  <EditIcon size={'1rem'} className="mr-3" />
-                  Edit
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-
-                <DropdownMenuItem onClick={() => setConfirm(true)}>
-                  <TrashIcon size={'1rem'} className="mr-3" color="red" />
-                  Delete
-                </DropdownMenuItem>
+                {!props.public && (
+                  <DropdownMenuItem onClick={() => setConfirm(true)}>
+                    <TrashIcon size={'1rem'} className="mr-3" color="red" />
+                    Delete
+                  </DropdownMenuItem>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <CardDescription>
-            {props.envDetail.name} {props.envDetail.version}
-          </CardDescription>
+          <CardDescription>Latest version: {latest}</CardDescription>
         </CardHeader>
         <CardContent className="text-ellipsis grow overflow-auto">
           <p>{description}</p>
@@ -126,7 +139,7 @@ export function ProjectCard(props: IProps) {
               }
               target="_blank"
             >
-              <span>Open project</span>
+              <span>Create project</span>
             </Link>
           </Button>
         </CardFooter>

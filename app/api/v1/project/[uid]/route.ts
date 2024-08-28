@@ -1,9 +1,5 @@
 import { getAuthUser } from '@/utils/auth-helpers/server';
-import {
-  createNewVersion,
-  deleteOne,
-  readOne
-} from '@/utils/database/environment';
+import { deleteOne, readOne, updateExisting } from '@/utils/database/project';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(
@@ -48,6 +44,6 @@ export async function PATCH(
 
   const resourceUID = params.uid;
   const body = await request.json();
-  const response = await createNewVersion(userId, resourceUID, body);
+  const response = await updateExisting(userId, resourceUID, body);
   return new NextResponse(JSON.stringify(response));
 }

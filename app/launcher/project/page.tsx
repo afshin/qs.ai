@@ -1,11 +1,11 @@
 import { LauncherSideBar } from '@/components/ui/LauncherSideBar/LauncherSideBar';
-import Project from '@/components/ui/Project/Project';
-import { readAllAuthorized } from '@/utils/database/environment';
+import { Project } from '@/components/ui/Project';
+import { readAllAuthorized as readAllAuthorizedEnv } from '@/utils/database/environment';
+import { readAllAuthorized as readAllAuthorizedProj } from '@/utils/database/project';
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import { Fragment } from 'react';
-
-export default async function ProjectPage() {
+export default async function LauncherPage() {
   const supabase = createClient();
 
   const {
@@ -15,15 +15,16 @@ export default async function ProjectPage() {
   if (!user) {
     return redirect('/signin');
   }
-  const userId = user.id;
-  const response = await readAllAuthorized(userId);
-
+  const response = await readAllAuthorizedEnv(user.id, true);
+  const responseData = response.data ?? { public: [], private: [] };
+  const allProjectResponse = await readAllAuthorizedProj(user.id, true);
+  const allProjectData = allProjectResponse.data ?? [];
   return (
     <Fragment>
       <div className=" col-span-1 sm:col-span-2 bg-primary-foreground ">
         <LauncherSideBar selected="project" />
       </div>
-      <Project environments={response.data ?? []} />
+      <Project environments={responseData} projects={allProjectData} />
     </Fragment>
   );
 }

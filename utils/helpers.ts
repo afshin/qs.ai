@@ -28,7 +28,7 @@ export async function sendRequest<T = any>({
   data
 }: {
   url: string;
-  method?: 'GET' | 'POST' | 'DELETE' | 'UPDATE';
+  method?: 'GET' | 'POST' | 'DELETE' | 'PATCH';
   data?: any;
 }): Promise<T> {
   const fullUrl = getURL(url);

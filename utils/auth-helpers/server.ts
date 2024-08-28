@@ -177,7 +177,7 @@ export async function signInWithPassword(formData: FormData) {
     await createUserStorage({ supabase, session: data.session });
     cookieStore.set('preferredSignInView', 'password_signin', { path: '/' });
     redirectPath = getStatusRedirect(
-      '/launcher/home',
+      '/launcher',
       'Success!',
       'You are now signed in.'
     );
@@ -361,4 +361,24 @@ export async function updateName(formData: FormData) {
       'Your name could not be updated.'
     );
   }
+}
+
+export async function getAuthUser(
+  authHeader: string | null
+): Promise<string | undefined> {
+  const supabaseClient = createClient();
+  const authData = await supabaseClient.auth.getUser();
+  let userId = authData.data.user?.id;
+  if (!userId) {
+    const jwt = authHeader?.split(' ')[1];
+    if (!jwt) {
+      return;
+    }
+    const jwtAuthData = await supabaseClient.auth.getUser(jwt);
+    userId = jwtAuthData.data.user?.id;
+    if (!userId) {
+      return;
+    }
+  }
+  return userId;
 }

@@ -15,7 +15,7 @@ export default async function PricingPage() {
     .maybeSingle();
 
   if (error) {
-    console.log(error);
+    console.error(error);
   }
 
   const { data: products } = await supabase

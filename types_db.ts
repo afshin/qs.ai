@@ -32,6 +32,41 @@ export type Database = {
           },
         ]
       }
+      environment_lock: {
+        Row: {
+          created_at: string
+          definition: Json | null
+          environment_uid: string | null
+          lockfile: Json | null
+          uid: string
+          version: string
+        }
+        Insert: {
+          created_at?: string
+          definition?: Json | null
+          environment_uid?: string | null
+          lockfile?: Json | null
+          uid?: string
+          version?: string
+        }
+        Update: {
+          created_at?: string
+          definition?: Json | null
+          environment_uid?: string | null
+          lockfile?: Json | null
+          uid?: string
+          version?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "environment_lock_environment_uid_fkey"
+            columns: ["environment_uid"]
+            isOneToOne: false
+            referencedRelation: "environments"
+            referencedColumns: ["uid"]
+          },
+        ]
+      }
       environments: {
         Row: {
           content: Json | null
@@ -174,14 +209,58 @@ export type Database = {
         }
         Relationships: []
       }
+      projects: {
+        Row: {
+          content: Json | null
+          created_at: string
+          description: string | null
+          env_version: string | null
+          name: string | null
+          uid: string
+          updated_at: string | null
+        }
+        Insert: {
+          content?: Json | null
+          created_at?: string
+          description?: string | null
+          env_version?: string | null
+          name?: string | null
+          uid?: string
+          updated_at?: string | null
+        }
+        Update: {
+          content?: Json | null
+          created_at?: string
+          description?: string | null
+          env_version?: string | null
+          name?: string | null
+          uid?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "projects_env_version_fkey"
+            columns: ["env_version"]
+            isOneToOne: false
+            referencedRelation: "environment_lock"
+            referencedColumns: ["uid"]
+          },
+        ]
+      }
       resources: {
         Row: {
+          public: boolean
+          resource_type: Database["public"]["Enums"]["resource_type"] | null
           uid: string
         }
         Insert: {
+          public?: boolean
+          resource_type?: Database["public"]["Enums"]["resource_type"] | null
           uid?: string
         }
         Update: {
+          public?: boolean
+          resource_type?: Database["public"]["Enums"]["resource_type"] | null
           uid?: string
         }
         Relationships: []
@@ -297,7 +376,7 @@ export type Database = {
     Enums: {
       pricing_plan_interval: "day" | "week" | "month" | "year"
       pricing_type: "one_time" | "recurring"
-      resource_type: "environment"
+      resource_type: "environment" | "project" | "datasource"
       role_type: "viewer" | "owner"
       subscription_status:
         | "trialing"

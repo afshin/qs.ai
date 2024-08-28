@@ -73,7 +73,7 @@ export default function Navlinks({ user }: NavlinksProps) {
             <li>
               {user && (
                 <Link
-                  href="/launcher/home"
+                  href="/launcher/environment"
                   className={s.link}
                   onClick={() => setShowMenu(false)}
                 >

@@ -27,6 +27,7 @@ interface IProps {
   code: string;
   setCode: (val: string) => void;
   language: any;
+  readOnly?: boolean;
 }
 export function CodeEditor(props: IProps) {
   const themeChanged = useCallback((cls: string) => {
@@ -52,6 +53,8 @@ export function CodeEditor(props: IProps) {
       minHeight="200px"
       theme={theme}
       extensions={[props.language]}
+      editable={Boolean(!props.readOnly)}
+      readOnly={Boolean(props.readOnly)}
     />
   );
 }

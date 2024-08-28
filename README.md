@@ -60,7 +60,7 @@ npm run serve
 In a separate terminal, run the following command in the current project to start the development server:
 
 ```bash
-pnpm supbase:reset # Only need this command if the database schema is updated
+pnpm supabase:reset # Only need this command if the database schema is updated
 pnpm dev
 ```
 

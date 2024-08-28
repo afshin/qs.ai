@@ -23,7 +23,7 @@ export default async function Account() {
     .maybeSingle();
 
   if (error) {
-    console.log(error);
+    console.error(error);
   }
 
   if (!user) {
