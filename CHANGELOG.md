@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/QuantStack/qs.ai/compare/v1.3.0...v1.4.0) (2024-08-28)
+
+
+### Features
+
+* update database schema ([#29](https://github.com/QuantStack/qs.ai/issues/29)) ([148468b](https://github.com/QuantStack/qs.ai/commit/148468bb27bbe443c17a3aa77514eeefd231e14c))
+
 # [1.3.0](https://github.com/QuantStack/qs.ai/compare/v1.2.0...v1.3.0) (2024-07-22)
 
 
