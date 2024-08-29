@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/QuantStack/qs.ai/compare/v1.4.0...v1.5.0) (2024-08-29)
+
+
+### Features
+
+* improve page loading speed ([#34](https://github.com/QuantStack/qs.ai/issues/34)) ([72ad98e](https://github.com/QuantStack/qs.ai/commit/72ad98e900a5a3cf62200c38a8b37b44e4c1b242))
+
 # [1.4.0](https://github.com/QuantStack/qs.ai/compare/v1.3.0...v1.4.0) (2024-08-28)
 
 
