@@ -4,5 +4,6 @@
       "source": "/jupyterlite/:path*",
       "destination": "{@{NEXT_PUBLIC_JUPYTERLITE_URL}@}/:path*"
     }
-  ]
+  ],
+  "regions": ["cdg1"]
 }

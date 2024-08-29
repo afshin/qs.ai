@@ -132,6 +132,7 @@ export function ProjectCard(props: IProps) {
         <CardFooter>
           <Button className="w-full bg-foreground">
             <Link
+              prefetch={false}
               href={
                 process.env.NEXT_PUBLIC_JUPYTERLITE_URL
                   ? `${process.env.NEXT_PUBLIC_JUPYTERLITE_URL}/lab/index.html?id=${props.uid}`

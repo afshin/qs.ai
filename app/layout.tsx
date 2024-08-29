@@ -1,14 +1,15 @@
-import { Metadata } from 'next';
+import 'styles/main.css';
+
 import Footer from '@/components/ui/Footer';
 import Navbar from '@/components/ui/Navbar';
 import { Toaster } from '@/components/ui/Toasts/toaster';
-import { PropsWithChildren, Suspense } from 'react';
-import { getURL } from '@/utils/helpers';
-import { Inter as FontSans } from 'next/font/google';
-import { ThemeProvider } from 'next-themes';
-
-import 'styles/main.css';
 import { cn } from '@/utils/cn';
+import { getURL } from '@/utils/helpers';
+import { Analytics } from '@vercel/analytics/react';
+import { Metadata } from 'next';
+import { ThemeProvider } from 'next-themes';
+import { Inter as FontSans } from 'next/font/google';
+import { PropsWithChildren, Suspense } from 'react';
 
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -74,6 +75,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
             <Toaster />
           </Suspense>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
