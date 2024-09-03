@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/QuantStack/qs.ai/compare/v1.5.0...v1.6.0) (2024-09-03)
+
+
+### Features
+
+* create project storage ([#35](https://github.com/QuantStack/qs.ai/issues/35)) ([870cddf](https://github.com/QuantStack/qs.ai/commit/870cddf9d6217099e9a5d41d320a6fcdbaab707a))
+
 # [1.5.0](https://github.com/QuantStack/qs.ai/compare/v1.4.0...v1.5.0) (2024-08-29)
 
 
