@@ -1,5 +1,6 @@
 import { getAuthUser } from '@/utils/auth-helpers/server';
 import { deleteOne, readOne, updateExisting } from '@/utils/database/project';
+import { deleteProjectStorage } from '@/utils/storage/create_storage';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(
@@ -29,6 +30,7 @@ export async function DELETE(
   }
   const resourceUID = params.uid;
   const response = await deleteOne(userId, resourceUID);
+  await deleteProjectStorage({ projectId: resourceUID });
   return new NextResponse(JSON.stringify(response));
 }
 

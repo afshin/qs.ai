@@ -6,10 +6,30 @@ on:
       - '*'
 
 jobs:
+  supabase-test:
+    runs-on: ubuntu-latest
+    environment:
+      name: dev
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup supabase
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - name: Link project
+        run: supabase link --project-ref $SUPABASE_PROJECT_ID
+      - name: Migrate database
+        run: supabase db push --dry-run
   build:
     runs-on: ubuntu-latest
     environment:
       name: dev
+    needs: supabase-test
 
     permissions:
       pull-requests: write

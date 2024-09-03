@@ -30,7 +30,7 @@ interface IProps {
   mode: 'new' | 'edit' | 'detail';
   open: boolean;
   setOpen: (arg: boolean) => void;
-  cardProjectData?: IProjectData;
+  cardProjectData?: Partial<IProjectData>;
   allEnvs: IEnvironmentData[];
 }
 
@@ -78,7 +78,6 @@ export const envDetailFromVersion = (
 export function NewProjectForm(props: IProps) {
   const { mode, open, setOpen, cardProjectData, allEnvs } = props;
   const [name, setName] = useState('');
-
   const [checkName, setCheckName] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [selectedEnv, setSelectedEnv] = useState<string | undefined>(undefined);
@@ -90,17 +89,7 @@ export function NewProjectForm(props: IProps) {
   >(undefined);
 
   const router = useRouter();
-  useEffect(() => {
-    const firstEnv = allEnvs[0];
-    if (firstEnv.allVersions) {
-      const versionItems = createVersionItems(firstEnv.allVersions);
-      setAllAvailableVersion(versionItems);
-      setSelectedEnvVersion(versionItems[0].value);
-    }
-    if (firstEnv?.uid) {
-      setSelectedEnv(firstEnv.uid);
-    }
-  }, [allEnvs]);
+  useEffect(() => {}, [allEnvs]);
 
   const onSelectedEnvChange = useCallback(
     (value: string) => {
@@ -166,14 +155,28 @@ export function NewProjectForm(props: IProps) {
   ]);
 
   useEffect(() => {
-    if ((mode === 'edit' || mode === 'detail') && cardProjectData) {
-      const { name, description } = cardProjectData;
-      setName(name);
-      const detail = envDetailFromVersion(cardProjectData.env_version, allEnvs);
-      onSelectedEnvChange(detail.envUID);
-      setSelectedEnvVersion(cardProjectData.env_version);
+    if (cardProjectData) {
+      const { name, description, env_version } = cardProjectData;
+      setName(name ?? '');
+      if (env_version) {
+        const detail = envDetailFromVersion(env_version, allEnvs);
+        onSelectedEnvChange(detail.envUID);
+        setSelectedEnvVersion(cardProjectData.env_version);
+      }
       if (description !== undefined) {
         setDesc(description);
+      }
+    } else {
+      setName('');
+      setDesc('');
+      const firstEnv = allEnvs[0];
+      if (firstEnv.allVersions) {
+        const versionItems = createVersionItems(firstEnv.allVersions);
+        setAllAvailableVersion(versionItems);
+        setSelectedEnvVersion(versionItems[0].value);
+      }
+      if (firstEnv?.uid) {
+        setSelectedEnv(firstEnv.uid);
       }
     }
   }, [open, mode, cardProjectData, allEnvs, onSelectedEnvChange]);

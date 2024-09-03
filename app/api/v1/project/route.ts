@@ -1,4 +1,5 @@
 import { createNew, readAllAuthorized } from '@/utils/database/project';
+import { createProjectStorage } from '@/utils/storage/create_storage';
 import { createClient } from '@/utils/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -37,6 +38,16 @@ export async function POST(request: NextRequest) {
     }
   }
   const body = await request.json();
+
   const state = await createNew(userId, body);
-  return new NextResponse(JSON.stringify(state));
+  if (state.success) {
+    const res = await createProjectStorage({
+      projectId: state.value
+    });
+    if (res.success) {
+      return new NextResponse(JSON.stringify(state));
+    }
+  }
+
+  return new NextResponse(JSON.stringify({ success: false }));
 }

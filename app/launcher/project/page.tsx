@@ -17,7 +17,7 @@ export default async function LauncherPage() {
   }
   const response = await readAllAuthorizedEnv(user.id, true);
   const responseData = response.data ?? { public: [], private: [] };
-  const allProjectResponse = await readAllAuthorizedProj(user.id, true);
+  const allProjectResponse = await readAllAuthorizedProj(user.id);
   const allProjectData = allProjectResponse.data ?? [];
   return (
     <Fragment>

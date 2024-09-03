@@ -1,9 +1,10 @@
 import { Database } from '@/types_db';
-import { createClient, PostgrestError } from '@supabase/supabase-js';
+import { createClient } from '@supabase/supabase-js';
 import { randomUUID } from 'crypto';
+import { IEnvironmentData, readOneVersion } from './environment';
 
 interface IProjectContent {
-  // Placeholder
+  env: IEnvironmentData;
 }
 
 export interface IProjectData {
@@ -18,11 +19,10 @@ export interface IProjectData {
 
 export async function readOne(
   userId: string,
-  projectID: string,
-  getVersion = false
+  projectID: string
 ): Promise<{
   data?: IProjectData[];
-  error?: PostgrestError | null;
+  error?: string | null;
   status: number;
 }> {
   const supabaseAdmin = createClient<Database>(
@@ -49,20 +49,28 @@ export async function readOne(
     .in('uid', resourceIds);
 
   if (project.error) {
-    return { error: project.error, status: project.status };
+    return { error: project.error.message, status: project.status };
   }
-
+  if (project.data.length > 0) {
+    const projectData = project.data[0];
+    const envId = projectData.env_version;
+    const envDataResponse = await readOneVersion(userId, envId ?? '');
+    const response = {
+      ...projectData,
+      content: { env: envDataResponse.data }
+    } as IProjectData;
+    return {
+      data: [response],
+      status: 200
+    };
+  }
   return {
-    data: project.data as IProjectData[],
-    error: project.error,
-    status: project.status
+    error: 'Project not found',
+    status: 401
   };
 }
 
-export async function readAllAuthorized(
-  userId: string,
-  getVersion: boolean = false
-): Promise<{
+export async function readAllAuthorized(userId: string): Promise<{
   data?: IProjectData[];
   error: string | null;
   status: number;

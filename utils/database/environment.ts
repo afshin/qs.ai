@@ -23,6 +23,7 @@ export interface IEnvironmentDetail {
   version: string;
   definition: IEnvironmentDefinition;
   lockfile: string;
+  environment_uid: string;
 }
 
 export interface IEnvironmentData {
@@ -388,4 +389,66 @@ export async function deleteOne(
   }
 
   return { success: true };
+}
+
+export async function readOneVersion(
+  userId: string,
+  versionUid: string
+): Promise<{
+  data?: IEnvironmentData;
+  error?: string | null;
+  status: number;
+}> {
+  const supabaseAdmin = createClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+    process.env.SUPABASE_SERVICE_ROLE_KEY || ''
+  );
+  const resourceRows = await supabaseAdmin
+    .schema('public')
+    .from('environment_lock')
+    .select('*')
+    .eq('uid', versionUid);
+  if (resourceRows.error) {
+    return { error: resourceRows.error.message, status: resourceRows.status };
+  }
+  if (resourceRows.data.length === 0) {
+    return { error: 'Environment not found', status: 404 };
+  }
+  const envVersionData = resourceRows.data[0] as any as IEnvironmentDetail;
+  const env = await supabaseAdmin
+    .schema('public')
+    .from('environments')
+    .select('*')
+    .eq('uid', envVersionData.environment_uid ?? '');
+
+  if (env.error) {
+    return { error: env.error.message, status: env.status };
+  }
+  if (env.data.length === 0) {
+    return { error: 'Environment not found', status: 404 };
+  }
+  const envData = env.data[0] as IEnvironmentData;
+  const permissionRows = await supabaseAdmin
+    .schema('public')
+    .from('permission')
+    .select('*')
+    .eq('user_uid', userId)
+    .eq('resource_uid', envData.uid);
+  const resourceIds = (permissionRows.data ?? [])
+    .filter(
+      (it) =>
+        it.resource_type === 'environment' &&
+        ['owner', 'viewer'].includes(it.role)
+    )
+    .map((d) => d.resource_uid);
+  if (resourceIds.length === 0) {
+    return { error: 'Unauthorized', status: 401 };
+  }
+
+  const response: IEnvironmentData = {
+    ...envData,
+    allVersions: { [envVersionData.version]: envVersionData }
+  };
+
+  return { data: response, error: env.error, status: env.status };
 }

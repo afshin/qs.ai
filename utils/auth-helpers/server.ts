@@ -5,7 +5,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { getURL, getErrorRedirect, getStatusRedirect } from 'utils/helpers';
 import { QSAI_COOKIE_NAME, getAuthTypes } from 'utils/auth-helpers/settings';
-import { createUserStorage } from '../storage/create_user_folder';
+import { createUserStorage } from '../storage/create_storage';
 import { Session } from '@supabase/supabase-js';
 
 function isValidEmail(email: string) {

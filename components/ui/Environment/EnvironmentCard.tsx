@@ -36,10 +36,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import { FileBoxIcon } from 'lucide-react';
+import { IEnvironmentDetail } from '@/utils/database/environment';
 
 interface IProps {
   name?: string;
-  latest?: string;
+  latest?: IEnvironmentDetail;
   description?: string;
   uid: string;
   public?: boolean;
@@ -50,7 +51,6 @@ export function ProjectCard(props: IProps) {
   const { latest, description } = props;
   const router = useRouter();
   const [confirm, setConfirm] = useState(false);
-
   const deleteEnv = useCallback(async () => {
     const response = await sendRequest<{ success: boolean; value: string }>({
       url: `/api/v1/env/${props.uid}`,
@@ -124,23 +124,15 @@ export function ProjectCard(props: IProps) {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <CardDescription>Latest version: {latest}</CardDescription>
+          <CardDescription>Latest version: {latest?.version}</CardDescription>
         </CardHeader>
         <CardContent className="text-ellipsis grow overflow-auto">
           <p>{description}</p>
         </CardContent>
         <CardFooter>
           <Button className="w-full bg-foreground">
-            <Link
-              prefetch={false}
-              href={
-                process.env.NEXT_PUBLIC_JUPYTERLITE_URL
-                  ? `${process.env.NEXT_PUBLIC_JUPYTERLITE_URL}/lab/index.html?id=${props.uid}`
-                  : `/jupyterlite/lab/index.html?id=${props.uid}`
-              }
-              target="_blank"
-            >
-              <span>Create project</span>
+            <Link href={`/launcher/project?env=${latest?.uid}`}>
+              <span>Use environment</span>
             </Link>
           </Button>
         </CardFooter>

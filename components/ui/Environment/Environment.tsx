@@ -49,9 +49,9 @@ export function Environment(props: IProps) {
         {props.environments.public.map((val, idx) => (
           <ProjectCard
             name={val.content?.name}
-            latest={val.content?.latest}
             description={val.content?.description}
             uid={val.uid}
+            latest={val.allVersions?.[val.content?.latest ?? '']}
             key={val.uid}
             editHandler={() => editHandler(val)}
             detailHandler={() => detailHandler(val)}
@@ -76,7 +76,7 @@ export function Environment(props: IProps) {
         {props.environments.private.map((val, idx) => (
           <ProjectCard
             name={val.content?.name}
-            latest={val.content?.latest}
+            latest={val.allVersions?.[val.content?.latest ?? '']}
             description={val.content?.description}
             uid={val.uid}
             key={val.uid}

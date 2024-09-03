@@ -4,7 +4,7 @@ import { IEnvironmentData } from '@/utils/database/environment';
 import { envDetailFromVersion, NewProjectForm } from './NewProjectForm';
 import { ProjectCard } from './ProjectCard';
 import { Button } from '@/components/ui/@shadcn/button';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { PlusIcon } from 'lucide-react';
 import { IProjectData } from '@/utils/database/project';
 interface IProps {
@@ -17,7 +17,8 @@ export function Project(props: IProps) {
   const [openEdit, setOpenEdit] = useState(false);
   const [openDetail, setOpenDetail] = useState(false);
 
-  const [cardProjectData, setCardProjectData] = useState<IProjectData>();
+  const [cardProjectData, setCardProjectData] =
+    useState<Partial<IProjectData>>();
   const editHandler = useCallback((data: IProjectData) => {
     setCardProjectData(data);
     setOpenEdit(true);
@@ -31,6 +32,17 @@ export function Project(props: IProps) {
     [props.environments]
   );
 
+  useEffect(() => {
+    const parsedUrl = new URL(window.location.href);
+    const env = parsedUrl.searchParams.get('env');
+    if (env) {
+      parsedUrl.searchParams.delete('env');
+      window.history.replaceState({}, '', parsedUrl.href);
+      setCardProjectData({ env_version: env });
+      setOpenDrawer(true);
+    }
+  }, [setOpenDrawer]);
+
   return (
     <div className="col-span-9 sm:col-span-8 bg-accent px-16 pt-8 overflow-auto gap-8 flex flex-col">
       <div className="w-full flex justify-between border-b border-neutral-600">
@@ -41,7 +53,10 @@ export function Project(props: IProps) {
           variant="outline"
           size="icon"
           className="bg-accent hover:bg-primary-foreground"
-          onClick={() => setOpenDrawer(true)}
+          onClick={() => {
+            setCardProjectData(undefined);
+            setOpenDrawer(true);
+          }}
         >
           <PlusIcon />
         </Button>
@@ -49,6 +64,7 @@ export function Project(props: IProps) {
           mode="new"
           open={openDrawer}
           setOpen={setOpenDrawer}
+          cardProjectData={cardProjectData}
           allEnvs={allEnvs}
         />
         <NewProjectForm
