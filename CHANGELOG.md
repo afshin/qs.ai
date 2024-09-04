@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/QuantStack/qs.ai/compare/v1.6.0...v1.7.0) (2024-09-04)
+
+
+### Features
+
+* Allow authenticated users to read permission table ([#36](https://github.com/QuantStack/qs.ai/issues/36)) ([3dea730](https://github.com/QuantStack/qs.ai/commit/3dea730881864ac685a7ffaf7a17f4fdf94f2aa9))
+
 # [1.6.0](https://github.com/QuantStack/qs.ai/compare/v1.5.0...v1.6.0) (2024-09-03)
 
 
