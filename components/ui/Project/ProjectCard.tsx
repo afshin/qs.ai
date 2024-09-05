@@ -55,6 +55,15 @@ export function ProjectCard(props: IProps) {
       router.refresh();
     }
   }, [props.uid, router]);
+  const shareHandler = useCallback(async () => {
+    const response = await sendRequest<{
+      data: { success: boolean; value: string }[];
+    }>({
+      url: `/api/v1/project/${props.uid}`,
+      method: 'GET'
+    });
+    console.log('res', response.data[0]);
+  }, [props.uid]);
 
   return (
     <>
@@ -91,7 +100,7 @@ export function ProjectCard(props: IProps) {
                 <Ellipsis />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={shareHandler}>
                   <ShareIcon size={'1rem'} className="mr-3" />
                   Share
                 </DropdownMenuItem>

@@ -428,21 +428,31 @@ export async function readOneVersion(
     return { error: 'Environment not found', status: 404 };
   }
   const envData = env.data[0] as IEnvironmentData;
-  const permissionRows = await supabaseAdmin
+
+  const envResourceRecord = await supabaseAdmin
     .schema('public')
-    .from('permission')
-    .select('*')
-    .eq('user_uid', userId)
-    .eq('resource_uid', envData.uid);
-  const resourceIds = (permissionRows.data ?? [])
-    .filter(
-      (it) =>
-        it.resource_type === 'environment' &&
-        ['owner', 'viewer'].includes(it.role)
-    )
-    .map((d) => d.resource_uid);
-  if (resourceIds.length === 0) {
-    return { error: 'Unauthorized', status: 401 };
+    .from('resources')
+    .select('public')
+    .eq('uid', envData.uid);
+  if (envResourceRecord.data?.length && envResourceRecord.data[0].public) {
+    // Public project
+  } else {
+    const permissionRows = await supabaseAdmin
+      .schema('public')
+      .from('permission')
+      .select('*')
+      .eq('user_uid', userId)
+      .eq('resource_uid', envData.uid);
+    const resourceIds = (permissionRows.data ?? [])
+      .filter(
+        (it) =>
+          it.resource_type === 'environment' &&
+          ['owner', 'viewer'].includes(it.role)
+      )
+      .map((d) => d.resource_uid);
+    if (resourceIds.length === 0) {
+      return { error: 'Unauthorized', status: 401 };
+    }
   }
 
   const response: IEnvironmentData = {

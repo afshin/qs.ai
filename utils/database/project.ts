@@ -4,7 +4,7 @@ import { randomUUID } from 'crypto';
 import { IEnvironmentData, readOneVersion } from './environment';
 
 interface IProjectContent {
-  env: IEnvironmentData;
+  env?: IEnvironmentData;
 }
 
 export interface IProjectData {
@@ -55,6 +55,7 @@ export async function readOne(
     const projectData = project.data[0];
     const envId = projectData.env_version;
     const envDataResponse = await readOneVersion(userId, envId ?? '');
+    console.log('im here', envDataResponse);
     const response = {
       ...projectData,
       content: { env: envDataResponse.data }
