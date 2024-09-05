@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/QuantStack/qs.ai/compare/v1.7.0...v1.7.1) (2024-09-05)
+
+
+### Bug Fixes
+
+* Allow public environment access   ([#37](https://github.com/QuantStack/qs.ai/issues/37)) ([d2699ee](https://github.com/QuantStack/qs.ai/commit/d2699eeb3c4b857e613d1407acf7bd66918e9049))
+
 # [1.7.0](https://github.com/QuantStack/qs.ai/compare/v1.6.0...v1.7.0) (2024-09-04)
 
 
