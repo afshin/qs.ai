@@ -136,7 +136,6 @@ export function NewProjectForm(props: IProps) {
       });
     }
     setSubmitting(false);
-
     if (response.success) {
       setName('');
 

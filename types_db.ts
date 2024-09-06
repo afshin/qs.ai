@@ -96,6 +96,41 @@ export type Database = {
           },
         ]
       }
+      pending_invitation: {
+        Row: {
+          created_at: string
+          email: string
+          resource_type: Database["public"]["Enums"]["resource_type"]
+          resource_uid: string | null
+          role: Database["public"]["Enums"]["role_type"]
+          uid: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          resource_type: Database["public"]["Enums"]["resource_type"]
+          resource_uid?: string | null
+          role: Database["public"]["Enums"]["role_type"]
+          uid?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          resource_type?: Database["public"]["Enums"]["resource_type"]
+          resource_uid?: string | null
+          role?: Database["public"]["Enums"]["role_type"]
+          uid?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pending_invitation_resource_uid_fkey"
+            columns: ["resource_uid"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["uid"]
+          },
+        ]
+      }
       permission: {
         Row: {
           resource_type: Database["public"]["Enums"]["resource_type"]
@@ -338,6 +373,7 @@ export type Database = {
         Row: {
           avatar_url: string | null
           billing_address: Json | null
+          email: string | null
           full_name: string | null
           id: string
           payment_method: Json | null
@@ -345,6 +381,7 @@ export type Database = {
         Insert: {
           avatar_url?: string | null
           billing_address?: Json | null
+          email?: string | null
           full_name?: string | null
           id: string
           payment_method?: Json | null
@@ -352,6 +389,7 @@ export type Database = {
         Update: {
           avatar_url?: string | null
           billing_address?: Json | null
+          email?: string | null
           full_name?: string | null
           id?: string
           payment_method?: Json | null

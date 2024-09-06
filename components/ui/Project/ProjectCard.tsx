@@ -31,6 +31,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import { FolderIcon } from 'lucide-react';
+import { ShareDialog } from '../ShareDialog';
 
 interface IProps {
   name?: string;
@@ -45,6 +46,7 @@ export function ProjectCard(props: IProps) {
   const { description } = props;
   const router = useRouter();
   const [confirm, setConfirm] = useState(false);
+  const [openShare, setOpenShare] = useState(false);
 
   const deleteProj = useCallback(async () => {
     const response = await sendRequest<{ success: boolean; value: string }>({
@@ -56,14 +58,8 @@ export function ProjectCard(props: IProps) {
     }
   }, [props.uid, router]);
   const shareHandler = useCallback(async () => {
-    const response = await sendRequest<{
-      data: { success: boolean; value: string }[];
-    }>({
-      url: `/api/v1/project/${props.uid}`,
-      method: 'GET'
-    });
-    console.log('res', response.data[0]);
-  }, [props.uid]);
+    setOpenShare(true);
+  }, []);
 
   return (
     <>
@@ -86,6 +82,11 @@ export function ProjectCard(props: IProps) {
           </DialogHeader>
         </DialogContent>
       </Dialog>
+      <ShareDialog
+        open={openShare}
+        setOpen={setOpenShare}
+        projectUID={props.uid}
+      />
       <Card className="hover:drop-shadow-xl h-80 flex flex-col">
         <CardHeader>
           <div className="flex flex-row justify-between">
