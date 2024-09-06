@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/QuantStack/qs.ai/compare/v1.7.1...v1.8.0) (2024-09-06)
+
+
+### Features
+
+* share project with other users ([#38](https://github.com/QuantStack/qs.ai/issues/38)) ([011c75e](https://github.com/QuantStack/qs.ai/commit/011c75e7b02d1ef671f18740a68205413eba112e))
+
 ## [1.7.1](https://github.com/QuantStack/qs.ai/compare/v1.7.0...v1.7.1) (2024-09-05)
 
 
