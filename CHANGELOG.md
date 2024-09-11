@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/QuantStack/qs.ai/compare/v1.8.0...v1.9.0) (2024-09-11)
+
+
+### Features
+
+* Update rewrite ([#39](https://github.com/QuantStack/qs.ai/issues/39)) ([04676ce](https://github.com/QuantStack/qs.ai/commit/04676ce07f897b28d5b61c289af8e57304dc6383))
+
 # [1.8.0](https://github.com/QuantStack/qs.ai/compare/v1.7.1...v1.8.0) (2024-09-06)
 
 
