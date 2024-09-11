@@ -130,11 +130,7 @@ export function ProjectCard(props: IProps) {
           <Button className="w-full bg-foreground">
             <Link
               prefetch={false}
-              href={
-                process.env.NEXT_PUBLIC_JUPYTERLITE_URL
-                  ? `${process.env.NEXT_PUBLIC_JUPYTERLITE_URL}/lab/index.html?id=${props.uid}`
-                  : `/jupyterlite/lab/index.html?id=${props.uid}`
-              }
+              href={`/project/${props.uid}`}
               target="_blank"
             >
               <span>Open project</span>

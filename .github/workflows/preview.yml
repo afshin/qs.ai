@@ -49,7 +49,7 @@ jobs:
         with:
           tokenPrefix: '{@{'
           tokenSuffix: '}@}'
-          files: '["**/vercel.json"]'
+          files: '["**/next.config.js"]'
         env:
           NEXT_PUBLIC_JUPYTERLITE_URL: ${{ vars.NEXT_PUBLIC_JUPYTERLITE_URL }}
       - uses: actions/setup-node@v4
