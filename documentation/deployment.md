@@ -28,6 +28,11 @@
 - Within this project, get the following secrets:
   - project ID
   - public URL of the project
+- Go to Settings/Environment Variables and define following variables:
+  - SUPABASE_SERVICE_ROLE_KEY: Service role key of `qsai-dev-eu_central`
+  - NEXT_PUBLIC_SUPABASE_ANON_KEY: Anon key of `qsai-dev-eu_central` project
+  - NEXT_PUBLIC_SITE_URL: public URL of the `qsai-dev` project
+  - NEXT_PUBLIC_SUPABASE_URL: Url to `qsai-dev-eu_central` project
 
 ## Setting up GitHub
 
@@ -38,10 +43,6 @@
 
   - VERCEL_ORG_ID: Vercel origanization ID
   - VERCEL_PROJECT_ID: Vercel project ID
-  - NEXT_PUBLIC_SITE_URL: public URL of the `qsai-dev` project
-  - NEXT_PUBLIC_SUPABASE_ANON_KEY: Anon key of `qsai-dev-eu_central` project
-  - SUPABASE_SERVICE_ROLE_KEY: Service role key of `qsai-dev-eu_central`
-  - NEXT_PUBLIC_SUPABASE_URL: Url to `qsai-dev-eu_central` project
   - SUPABASE_DB_PASSWORD: `qsai-dev-eu_central` database password
   - SUPABASE_PROJECT_ID: Project ID of `qsai-dev-eu_central`
 
