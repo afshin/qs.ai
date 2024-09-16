@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/QuantStack/qs.ai/compare/v1.9.0...v1.10.0) (2024-09-16)
+
+
+### Features
+
+* share environment ([#42](https://github.com/QuantStack/qs.ai/issues/42)) ([4a02ed9](https://github.com/QuantStack/qs.ai/commit/4a02ed97e1757fe6fb3a73055d77ac3aa75f8bfa))
+
 # [1.9.0](https://github.com/QuantStack/qs.ai/compare/v1.8.0...v1.9.0) (2024-09-11)
 
 
