@@ -85,7 +85,9 @@ export function ProjectCard(props: IProps) {
       <ShareDialog
         open={openShare}
         setOpen={setOpenShare}
-        projectUID={props.uid}
+        resourceUID={props.uid}
+        title="Share project"
+        description="Project environment and storage space will be shared"
       />
       <Card className="hover:drop-shadow-xl h-80 flex flex-col">
         <CardHeader>

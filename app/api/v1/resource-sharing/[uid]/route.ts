@@ -1,5 +1,5 @@
 import { getAuthUser } from '@/utils/auth-helpers/server';
-import { shareProject, readOne } from '@/utils/database/sharing';
+import { shareResource, readOne, deleteOne } from '@/utils/database/sharing';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(
@@ -12,9 +12,9 @@ export async function POST(
     return new NextResponse('Unauthorized', { status: 401 });
   }
   const body = await request.json();
-  const response = await shareProject({
+  const response = await shareResource({
     userId,
-    projectId: params.uid,
+    resourceId: params.uid,
     role: body['role'],
     emails: body['emails']
   });
@@ -34,6 +34,24 @@ export async function GET(
   const response = await readOne({
     userId,
     resourceUID: params.uid
+  });
+  return new NextResponse(JSON.stringify(response));
+}
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { uid: string } }
+) {
+  const authHeader = request.headers.get('authorization');
+  const userId = await getAuthUser(authHeader);
+  if (!userId) {
+    return new NextResponse('Unauthorized', { status: 401 });
+  }
+  const body = await request.json();
+  const response = await deleteOne({
+    userId,
+    resourceUID: params.uid,
+    email: body['email']
   });
   return new NextResponse(JSON.stringify(response));
 }

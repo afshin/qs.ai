@@ -37,6 +37,7 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import { FileBoxIcon } from 'lucide-react';
 import { IEnvironmentDetail } from '@/utils/database/environment';
+import { ShareDialog } from '../ShareDialog';
 
 interface IProps {
   name?: string;
@@ -60,7 +61,10 @@ export function ProjectCard(props: IProps) {
       router.refresh();
     }
   }, [props.uid, router]);
-
+  const [openShare, setOpenShare] = useState(false);
+  const shareHandler = useCallback(async () => {
+    setOpenShare(true);
+  }, []);
   return (
     <>
       <Dialog open={confirm} onOpenChange={setConfirm}>
@@ -82,6 +86,13 @@ export function ProjectCard(props: IProps) {
           </DialogHeader>
         </DialogContent>
       </Dialog>
+      <ShareDialog
+        open={openShare}
+        setOpen={setOpenShare}
+        resourceUID={props.uid}
+        title="Share environment"
+        description="Environment definition will be shared"
+      />
       <Card className="hover:drop-shadow-xl h-80 flex flex-col">
         <CardHeader>
           <div className="flex flex-row justify-between">
@@ -98,7 +109,7 @@ export function ProjectCard(props: IProps) {
               <DropdownMenuContent>
                 {!props.public && (
                   <>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={shareHandler}>
                       <ShareIcon size={'1rem'} className="mr-3" />
                       Share
                     </DropdownMenuItem>

@@ -179,14 +179,31 @@ export async function deleteOne(
       (it) => it.resource_type === 'project' && ['owner'].includes(it.role)
     )
     .map((d) => d.resource_uid);
-
-  const deleteEnv = await supabaseAdmin
-    .schema('public')
-    .from('projects')
-    .delete()
-    .in('uid', resourceIds);
-  if (deleteEnv.error) {
-    return { value: deleteEnv.error.message, success: false };
+  const resourceIdsViewer = (resourceRows.data ?? [])
+    .filter(
+      (it) => it.resource_type === 'project' && ['viewer'].includes(it.role)
+    )
+    .map((d) => d.resource_uid);
+  if (resourceIds.length) {
+    const deleteEnv = await supabaseAdmin
+      .schema('public')
+      .from('projects')
+      .delete()
+      .in('uid', resourceIds);
+    if (deleteEnv.error) {
+      return { value: deleteEnv.error.message, success: false };
+    }
+  }
+  if (resourceIdsViewer) {
+    const deletePermission = await supabaseAdmin
+      .schema('public')
+      .from('permission')
+      .delete()
+      .eq('user_uid', userId)
+      .in('resource_uid', resourceIdsViewer);
+    if (deletePermission.error) {
+      return { value: deletePermission.error.message, success: false };
+    }
   }
 
   return { success: true };

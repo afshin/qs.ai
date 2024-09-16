@@ -1,14 +1,14 @@
 import { Database } from '@/types_db';
 import { createClient } from '@supabase/supabase-js';
 
-export async function shareProject({
+export async function shareResource({
   userId,
-  projectId,
+  resourceId,
   role,
   emails
 }: {
   userId: string;
-  projectId: string;
+  resourceId: string;
   role: 'owner' | 'viewer';
   emails: string[];
 }): Promise<{ success: boolean; value: string }> {
@@ -21,14 +21,14 @@ export async function shareProject({
   }
   const permission = await supabaseAdmin
     .from('permission')
-    .select('role')
-    .eq('resource_uid', projectId)
+    .select('role, resource_type')
+    .eq('resource_uid', resourceId)
     .eq('user_uid', userId)
-    .eq('resource_type', 'project')
     .eq('role', 'owner');
   if (!permission.data?.length) {
     return { success: false, value: 'Unauthorized' };
   }
+  const resourceType = permission.data[0].resource_type;
   const invitedIds: string[] = [];
   const noAccounts: string[] = [];
 
@@ -46,8 +46,8 @@ export async function shareProject({
   });
   const permissionRows = invitedIds.map((uid) => ({
     user_uid: uid,
-    resource_uid: projectId,
-    resource_type: 'project' as any,
+    resource_uid: resourceId,
+    resource_type: resourceType,
     role
   }));
   const response = await supabaseAdmin
@@ -55,8 +55,8 @@ export async function shareProject({
     .upsert(permissionRows);
   const pendingRows = noAccounts.map((email) => ({
     email,
-    resource_uid: projectId,
-    resource_type: 'project' as any,
+    resource_uid: resourceId,
+    resource_type: resourceType,
     role
   }));
 
@@ -122,4 +122,61 @@ export async function readOne({
   }
 
   return { success: true, data: sharedUsers };
+}
+
+export async function deleteOne({
+  userId,
+  resourceUID,
+  email
+}: {
+  userId: string;
+  resourceUID: string;
+  email: string;
+}) {
+  const supabaseAdmin = createClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+    process.env.SUPABASE_SERVICE_ROLE_KEY || ''
+  );
+
+  const permission = await supabaseAdmin
+    .from('permission')
+    .select('role')
+    .eq('resource_uid', resourceUID)
+    .eq('user_uid', userId)
+    .eq('role', 'owner');
+  if (!permission.data?.length) {
+    return { success: false, value: 'Unauthorized' };
+  }
+  const userIdFromEmail = await supabaseAdmin
+    .from('users')
+    .select('id')
+    .eq('email', email);
+  if (userIdFromEmail.error) {
+    return { success: false, value: userIdFromEmail.error.message };
+  }
+  const userIdToDelete = userIdFromEmail.data?.[0]?.id;
+  if (userIdToDelete) {
+    const deleteResponse = await supabaseAdmin
+      .from('permission')
+      .delete()
+      .eq('resource_uid', resourceUID)
+      .eq('user_uid', userIdToDelete)
+      .eq('role', 'viewer');
+    if (deleteResponse.error) {
+      return { success: false, value: deleteResponse.error.message };
+    }
+    return { success: true };
+  } else {
+    // Check the pending table
+    const deleteResponse = await supabaseAdmin
+      .from('pending_invitation')
+      .delete()
+      .eq('email', email)
+      .eq('role', 'viewer')
+      .eq('resource_uid', resourceUID);
+    if (deleteResponse.error) {
+      return { success: false, value: deleteResponse.error.message };
+    }
+    return { success: true };
+  }
 }

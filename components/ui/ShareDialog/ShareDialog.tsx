@@ -20,23 +20,26 @@ import { Button } from '@/components/ui/@shadcn/button';
 import { useCallback, useEffect, useState } from 'react';
 import { validateEmail } from '@/utils/helpers';
 import { LoadingSpinner } from '../LoadingSpinner';
+import { LucideX } from 'lucide-react';
 interface IProps {
   open: boolean;
   setOpen: (arg: boolean) => void;
-  projectUID: string;
+  resourceUID: string;
+  title: string;
+  description?: string;
 }
-interface ISharedProject {
+interface ISharedResource {
   email: string;
   role: string;
   pending?: boolean;
 }
 
 export function ShareDialog(props: IProps) {
-  const { open, setOpen, projectUID } = props;
+  const { open, setOpen, resourceUID } = props;
   const [tags, setTags] = useState<Tag[]>([]);
   const [activeTagIndex, setActiveTagIndex] = useState<number | null>(1);
   const [role, setRole] = useState<'owner' | 'viewer'>('viewer');
-  const [sharedData, setSharedData] = useState<ISharedProject[]>([]);
+  const [sharedData, setSharedData] = useState<ISharedResource[]>([]);
   const [fetching, setFetching] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -45,9 +48,9 @@ export function ShareDialog(props: IProps) {
     const response = await sendRequest<{
       success: boolean;
       value?: string;
-      data?: ISharedProject[];
+      data?: ISharedResource[];
     }>({
-      url: `/api/v1/resource-sharing/${projectUID}`,
+      url: `/api/v1/resource-sharing/${resourceUID}`,
       method: 'GET'
     });
     if (response.success && response.data) {
@@ -58,25 +61,38 @@ export function ShareDialog(props: IProps) {
       setErrorMessage('Error: ' + response.value ?? '');
       setFetching(false);
     }
-  }, [projectUID]);
+  }, [resourceUID]);
 
   const sendInvitation = useCallback(async () => {
     const emails = tags.map((it) => it.text);
     const response = await sendRequest<{ success: boolean; value: string }>({
-      url: `/api/v1/resource-sharing/${projectUID}`,
+      url: `/api/v1/resource-sharing/${resourceUID}`,
       method: 'POST',
       data: { emails, role }
     });
     if (response.success) {
       await fetchData();
     }
-  }, [tags, role, projectUID, fetchData]);
+  }, [tags, role, resourceUID, fetchData]);
 
   useEffect(() => {
     if (open) {
       fetchData().catch(console.error);
     }
   }, [open, fetchData]);
+  const removeCollaborator = useCallback(
+    async (email: string) => {
+      const response = await sendRequest<{ success: boolean; value: string }>({
+        url: `/api/v1/resource-sharing/${resourceUID}`,
+        method: 'DELETE',
+        data: { email }
+      });
+      if (response.success) {
+        await fetchData();
+      }
+    },
+    [fetchData, resourceUID]
+  );
   return (
     <Dialog
       open={open}
@@ -90,10 +106,8 @@ export function ShareDialog(props: IProps) {
     >
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Share project</DialogTitle>
-          <DialogDescription>
-            Project environment and storage space will be shared
-          </DialogDescription>
+          <DialogTitle>{props.title}</DialogTitle>
+          <DialogDescription>{props.description}</DialogDescription>
         </DialogHeader>{' '}
         <div className="flex items-center space-x-2">
           <div className="grid flex-1 gap-2">
@@ -151,6 +165,14 @@ export function ShareDialog(props: IProps) {
                 <span>
                   {it.role} {it.pending ? '(pending)' : ''}
                 </span>
+
+                <button
+                  onClick={() => removeCollaborator(it.email)}
+                  disabled={it.role === 'owner'}
+                  className={`mt-1 ${it.role === 'owner' ? 'text-muted' : 'text-muted-foreground'}`}
+                >
+                  <LucideX size={18} />
+                </button>
               </div>
             ))}
             <span>{errorMessage}</span>
