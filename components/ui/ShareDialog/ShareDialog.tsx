@@ -73,6 +73,7 @@ export function ShareDialog(props: IProps) {
     if (response.success) {
       await fetchData();
     }
+    setTags([]);
   }, [tags, role, resourceUID, fetchData]);
 
   useEffect(() => {
