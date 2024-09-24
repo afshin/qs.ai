@@ -41,6 +41,7 @@ export default function EmailForm({
             type="submit"
             form="emailForm"
             loading={isSubmitting}
+            className="w-5/12 outline outline-2 dark:text-white dark:outline-gray-800"
           >
             Update Email
           </Button>
@@ -52,7 +53,7 @@ export default function EmailForm({
           <input
             type="text"
             name="newEmail"
-            className="w-1/2 p-3 rounded-md bg-zinc-800"
+            className="w-1/2 p-3 rounded-md bg-zinc-800 text-gray-400"
             defaultValue={userEmail ?? ''}
             placeholder="Your email"
             maxLength={64}

@@ -60,7 +60,7 @@ export default function PasswordSignIn({
           <Button
             variant="slim"
             type="submit"
-            className="bg-foreground"
+            className="bg-foreground dark:hover:bg-foreground dark:hover:scale-95"
             loading={isSubmitting}
           >
             Sign in

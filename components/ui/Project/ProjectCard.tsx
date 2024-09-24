@@ -26,11 +26,16 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/@shadcn/dropdown-menu';
 import { sendRequest } from '@/utils/helpers';
-import { EditIcon, ShareIcon, TrashIcon } from 'lucide-react';
+import {
+  EditIcon,
+  FolderIcon,
+  ShareIcon,
+  TrashIcon,
+  SquareArrowOutUpRight
+} from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
-import { FolderIcon } from 'lucide-react';
 import { ShareDialog } from '../ShareDialog';
 
 interface IProps {
@@ -66,7 +71,7 @@ export function ProjectCard(props: IProps) {
       <Dialog open={confirm} onOpenChange={setConfirm}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Are you absolutely sure?</DialogTitle>
+            <DialogTitle>Are you sure?</DialogTitle>
             <DialogDescription>
               This action cannot be undone. This will permanently delete your
               project and remove your data from our servers.
@@ -76,7 +81,7 @@ export function ProjectCard(props: IProps) {
                 Cancel
               </Button>
               <Button variant={'destructive'} onClick={deleteProj}>
-                Delete
+                Yes, delete project
               </Button>
             </DialogFooter>
           </DialogHeader>
@@ -87,7 +92,7 @@ export function ProjectCard(props: IProps) {
         setOpen={setOpenShare}
         resourceUID={props.uid}
         title="Share project"
-        description="Project environment and storage space will be shared"
+        description="Projects environments and storage spaces will be shared"
       />
       <Card className="hover:drop-shadow-xl h-80 flex flex-col">
         <CardHeader>
@@ -135,7 +140,13 @@ export function ProjectCard(props: IProps) {
               href={`/project/${props.uid}`}
               target="_blank"
             >
-              <span>Open project</span>
+              <span>
+                <SquareArrowOutUpRight
+                  size={'1rem'}
+                  className="mr-2 inline-flex"
+                />
+                Open project
+              </span>
             </Link>
           </Button>
         </CardFooter>

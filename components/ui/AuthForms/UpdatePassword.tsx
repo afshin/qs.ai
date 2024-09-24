@@ -39,7 +39,7 @@ export default function UpdatePassword({
               type="password"
               name="password"
               autoComplete="current-password"
-              className="w-full p-3 rounded-md bg-zinc-800"
+              className="w-full p-3 rounded-md"
             />
             <label htmlFor="passwordConfirm">Confirm New Password</label>
             <input
@@ -48,13 +48,13 @@ export default function UpdatePassword({
               type="password"
               name="passwordConfirm"
               autoComplete="current-password"
-              className="w-full p-3 rounded-md bg-zinc-800"
+              className="w-full p-3 rounded-md"
             />
           </div>
           <Button
             variant="slim"
             type="submit"
-            className="mt-1"
+            className="mt-1 bg-foreground dark:hover:bg-foreground dark:hover:scale-95"
             loading={isSubmitting}
           >
             Update Password

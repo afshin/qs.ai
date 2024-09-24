@@ -11,6 +11,6 @@ export default async function LauncherPage() {
   if (!user) {
     return redirect('/signin');
   } else {
-    return redirect('/launcher/environment');
+    return redirect('/launcher/project');
   }
 }

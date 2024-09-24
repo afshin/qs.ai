@@ -37,7 +37,7 @@ export default async function Account() {
           <h1 className="text-4xl font-extrabold  dark:text-white sm:text-center sm:text-6xl">
             Account
           </h1>
-          <p className="max-w-2xl m-auto mt-5 text-xl text-zinc-200 sm:text-center sm:text-2xl">
+          <p className="max-w-2xl m-auto mt-5 text-xl text-zinc-700 dark:text-zinc-100 sm:text-center sm:text-2xl">
             We partnered with Stripe for a simplified billing.
           </p>
         </div>

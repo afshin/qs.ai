@@ -187,7 +187,7 @@ export function NewProjectForm(props: IProps) {
               ? 'Create New Environment'
               : mode === 'edit'
                 ? 'Edit Environment'
-                : 'Environment detail'}
+                : 'Environment details'}
           </DrawerTitle>
         </DrawerHeader>
         <div className="h-full p-4 space-y-4 overflow-auto">
@@ -284,7 +284,13 @@ export function NewProjectForm(props: IProps) {
             )}
           </Tabs>
         </div>
-        <DrawerFooter className="flex-row-reverse">
+        <DrawerFooter className="flex-row justify-between">
+          <DrawerClose asChild>
+            <Button variant={'secondary'} className="ml-0">
+              {' '}
+              {mode === 'new' || mode === 'edit' ? 'Cancel' : 'Close'}{' '}
+            </Button>
+          </DrawerClose>
           {mode !== 'detail' && (
             <Button
               className="bg-foreground"
@@ -294,9 +300,6 @@ export function NewProjectForm(props: IProps) {
               Submit
             </Button>
           )}
-          <DrawerClose asChild>
-            <Button variant={'secondary'}>Cancel</Button>
-          </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

@@ -4,7 +4,6 @@ import Logo from '@/components/icons/Logo';
 import { Button } from '@/components/ui/@shadcn/button';
 import { ThemeSwitcher } from '@/components/ui/ThemeSwitcher';
 import { getRedirectMethod } from '@/utils/auth-helpers/settings';
-import { LayoutGridIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
@@ -48,11 +47,9 @@ export default function Navlinks({ user }: NavlinksProps) {
                 router?.push('/launcher');
               }}
               variant="outline"
-              size="icon"
               className="rounded-full"
             >
-              <LayoutGridIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all" />
-              <span className="sr-only">Launcher</span>
+              <span>My Dashboard</span>
             </Button>
           )}
           <ThemeSwitcher />

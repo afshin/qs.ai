@@ -36,6 +36,7 @@ export default function NameForm({ userName }: { userName: string }) {
             type="submit"
             form="nameForm"
             loading={isSubmitting}
+            className="w-5/12 outline outline-2 dark:text-white dark:outline-gray-800"
           >
             Update Name
           </Button>
@@ -47,7 +48,7 @@ export default function NameForm({ userName }: { userName: string }) {
           <input
             type="text"
             name="fullName"
-            className="w-1/2 p-3 rounded-md bg-zinc-800"
+            className="w-1/2 p-3 rounded-md bg-zinc-800 text-gray-200 dark:text-gray-400"
             defaultValue={userName}
             placeholder="Your name"
             maxLength={64}

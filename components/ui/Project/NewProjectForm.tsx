@@ -249,7 +249,10 @@ export function NewProjectForm(props: IProps) {
             </Select>
           </div>
         </div>
-        <DrawerFooter className="flex-row-reverse">
+        <DrawerFooter className="flex-row justify-between">
+          <DrawerClose asChild>
+            <Button variant={'secondary'}>Cancel</Button>
+          </DrawerClose>
           {mode !== 'detail' && (
             <Button
               className="bg-foreground"
@@ -259,9 +262,6 @@ export function NewProjectForm(props: IProps) {
               Submit
             </Button>
           )}
-          <DrawerClose asChild>
-            <Button variant={'secondary'}>Cancel</Button>
-          </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

@@ -28,6 +28,7 @@ import {
 import { sendRequest } from '@/utils/helpers';
 import {
   EditIcon,
+  FileBoxIcon,
   ShareIcon,
   TrashIcon,
   SquareGanttChartIcon
@@ -35,7 +36,6 @@ import {
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
-import { FileBoxIcon } from 'lucide-react';
 import { IEnvironmentDetail } from '@/utils/database/environment';
 import { ShareDialog } from '../ShareDialog';
 
@@ -70,7 +70,7 @@ export function ProjectCard(props: IProps) {
       <Dialog open={confirm} onOpenChange={setConfirm}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Are you absolutely sure?</DialogTitle>
+            <DialogTitle>Are you sure?</DialogTitle>
             <DialogDescription>
               This action cannot be undone. This will permanently delete your
               environment and remove your data from our servers.
@@ -80,7 +80,7 @@ export function ProjectCard(props: IProps) {
                 Cancel
               </Button>
               <Button variant={'destructive'} onClick={deleteEnv}>
-                Delete
+                Yes, delete environment
               </Button>
             </DialogFooter>
           </DialogHeader>
@@ -123,7 +123,7 @@ export function ProjectCard(props: IProps) {
                 )}
                 <DropdownMenuItem onClick={props.detailHandler}>
                   <SquareGanttChartIcon size={'1rem'} className="mr-3" />
-                  Detail
+                  Details
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 {!props.public && (

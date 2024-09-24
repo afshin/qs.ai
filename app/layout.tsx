@@ -53,7 +53,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
     <html lang="en" data-theme="dark">
       <body
         className={cn(
-          'min-h-screen bg-background font-sans antialiased',
+          'min-h-screen bg-primary-foreground font-sans antialiased',
           fontSans.variable
         )}
       >
