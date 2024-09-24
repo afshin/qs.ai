@@ -1,3 +1,10 @@
+## [1.10.1](https://github.com/QuantStack/qs.ai/compare/v1.10.0...v1.10.1) (2024-09-24)
+
+
+### Bug Fixes
+
+* Reset input once collaborators invitations are sent ([#45](https://github.com/QuantStack/qs.ai/issues/45)) ([e5b1487](https://github.com/QuantStack/qs.ai/commit/e5b148756eaed390b5279d5fbff9abff9b77477b))
+
 # [1.10.0](https://github.com/QuantStack/qs.ai/compare/v1.9.0...v1.10.0) (2024-09-16)
 
 
