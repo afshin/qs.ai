@@ -4,6 +4,7 @@ import Logo from '@/components/icons/Logo';
 import { Button } from '@/components/ui/@shadcn/button';
 import { ThemeSwitcher } from '@/components/ui/ThemeSwitcher';
 import { getRedirectMethod } from '@/utils/auth-helpers/settings';
+import { LayoutGridIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
@@ -30,15 +31,9 @@ export default function Navlinks({ user }: NavlinksProps) {
   return (
     <nav className="dark:text-white">
       <div ref={catMenu} className="flex flex-wrap items-center  mx-auto p-4">
-        <Link
-          href="/"
-          className={`${s.logo} flex-grow`}
-          aria-label="Logo"
-          onClick={() => setShowMenu(false)}
-        >
+        <Link href="/" className={`${s.logo} flex-grow`} aria-label="Logo">
           <Logo />
         </Link>
-
         <div className="flex md:order-2 space-x-3 md:space-x-2 rtl:space-x-reverse pl-2">
           {user && (
             <Button
@@ -49,7 +44,8 @@ export default function Navlinks({ user }: NavlinksProps) {
               variant="outline"
               className="rounded-full"
             >
-              <span>My Dashboard</span>
+              <LayoutGridIcon className="not-sr-only sm:sr-only h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all" />
+              <span className="sr-only sm:not-sr-only">My Dashboard</span>
             </Button>
           )}
           <ThemeSwitcher />
